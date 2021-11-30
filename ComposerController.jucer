@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="NbYvhP" name="ComposerController" projectType="guiapp" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              version="0.0.1" companyName="Alessandro Arcidiaco" companyCopyright="Alessandro Arcidiaco"
+              companyWebsite="alessandroarcidiaco.it" companyEmail="ciao@alessandroarcidiaco.it"
+              cppLanguageStandard="17">
+  <MAINGROUP id="SJuTrP" name="ComposerController">
+    <GROUP id="{05F82070-6192-7F42-DA51-1947DCA5E6A3}" name="Source">
+      <FILE id="hzAjKJ" name="Fader.cpp" compile="1" resource="0" file="Source/Fader.cpp"/>
+      <FILE id="y5TES3" name="Fader.h" compile="0" resource="0" file="Source/Fader.h"/>
+      <FILE id="qOYuUT" name="Footer.cpp" compile="1" resource="0" file="Source/Footer.cpp"/>
+      <FILE id="Ea42r1" name="Footer.h" compile="0" resource="0" file="Source/Footer.h"/>
+      <FILE id="IwKNOC" name="Header.cpp" compile="1" resource="0" file="Source/Header.cpp"/>
+      <FILE id="BuM89Q" name="Header.h" compile="0" resource="0" file="Source/Header.h"/>
+      <FILE id="FlW40e" name="Pad.cpp" compile="1" resource="0" file="Source/Pad.cpp"/>
+      <FILE id="KY32J4" name="Pad.h" compile="0" resource="0" file="Source/Pad.h"/>
+      <FILE id="hjlABW" name="Tab.cpp" compile="1" resource="0" file="Source/Tab.cpp"/>
+      <FILE id="ijje6j" name="Tab.h" compile="0" resource="0" file="Source/Tab.h"/>
+      <FILE id="RajE1F" name="Config.h" compile="0" resource="0" file="Source/Config.h"/>
+      <FILE id="mQV52V" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="wZgPYn" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="LMuFPm" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="ComposerController"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="ComposerController"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2019>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
