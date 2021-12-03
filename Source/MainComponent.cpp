@@ -8,15 +8,15 @@ MainComponent::MainComponent()
     fader->tabId = "1";
     fader->ccNumber = 11;
     fader->ccValue = 50;
-    fader->addChangeListener(this);
+    //fader->addChangeListener(this);
     faders.push_back(std::move(fader));
 
     auto fader2 = std::make_unique<Fader>("c1");
     fader2->tabId = "1";
     fader2->ccNumber = 1;
     fader2->ccValue = 50;
-    fader2->addChangeListener(this);
-    fader2->setBounds(300, 100, 90, 450);
+    //fader2->addChangeListener(this);
+    //fader2->setBounds(300, 100, 90, 450);
     faders.push_back(std::move(fader2));
     
     for (auto &f : faders)
@@ -46,8 +46,8 @@ MainComponent::MainComponent()
 
 MainComponent::~MainComponent()
 {
-    for (auto &f : faders)
-        f->removeAllChangeListeners();
+    //for (auto &f : faders)
+    //    f->removeAllChangeListeners();
 }
 
 //==============================================================================
@@ -56,19 +56,6 @@ void MainComponent::paint (juce::Graphics& g)
     g.fillAll (juce::Colour(0xff27282c));
     g.setFont (juce::Font (16.0f));
     g.setColour (juce::Colours::white);
-}
-
-void MainComponent::changeListenerCallback(juce::ChangeBroadcaster* source)
-{
-    // TODO: check source an set bounds to the fader with a certain ID
-    //for (Fader * f : faders)
-    //{
-    //    if (source == f)
-    //    {
-    //        f->setBounds(f->bounds.x, f->bounds.y, f->bounds.width, f->bounds.height);
-    //        //TODO: store new value
-    //    }
-    //}
 }
 
 void MainComponent::resized()

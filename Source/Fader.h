@@ -19,7 +19,7 @@
 */
 
 class Fader  : public juce::Component, 
-               public juce::ChangeBroadcaster,
+               //public juce::ChangeBroadcaster,
                public juce::ComponentDragger
 {
 public:
@@ -35,7 +35,6 @@ public:
     void resized() override;
     void mouseDrag(const juce::MouseEvent& event) override;
     void mouseDown(const juce::MouseEvent& event) override;
-
 
     // properties
     juce::Label faderLabel;

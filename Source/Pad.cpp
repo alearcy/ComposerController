@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Pad.h"
+#include "Utilities.h"
 
 //==============================================================================
 Pad::Pad()
@@ -70,4 +71,5 @@ void Pad::mouseDown(const juce::MouseEvent& event)
 void Pad::mouseDrag(const juce::MouseEvent& event)
 {
     dragComponent(this, event, &movableConstraints);
+    Utility::setRoundedPosition(*this, 20);
 }

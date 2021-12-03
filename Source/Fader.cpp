@@ -9,7 +9,11 @@
 */
 
 #include <JuceHeader.h>
+#include <cmath>
 #include "Fader.h"
+#include "Utilities.h"
+
+//using namespace Utilities;
 
 //==============================================================================
 Fader::Fader()
@@ -77,5 +81,7 @@ void Fader::mouseDown(const juce::MouseEvent& event)
 
 void Fader::mouseDrag(const juce::MouseEvent& event)
 {
+    
     dragComponent(this, event, &movableConstraints);
+    Utility::setRoundedPosition(*this, 20);
 }
