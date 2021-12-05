@@ -60,6 +60,12 @@ void MainComponent::paint (juce::Graphics& g)
 
 void MainComponent::resized()
 {  
+    auto mainArea = getLocalBounds();
+    auto headerHeight = 40;
+    auto tabsHeight = 40;
+    header.setBounds(mainArea.removeFromTop(headerHeight));
+
+
     for (auto &f : faders)
     {
         int x = f->getBounds().getX();
@@ -76,8 +82,6 @@ void MainComponent::resized()
 
     for (auto &t : tabs)
     {
-        t->setBounds(0, 40, getWidth(), 40);
+        t->setBounds(mainArea.removeFromTop(tabsHeight));
     }
-
-    header.setBounds(0, 0, getWidth(), 40);  
 }

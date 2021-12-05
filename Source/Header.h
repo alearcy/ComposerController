@@ -23,6 +23,8 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    juce::TextButton editBtn;
+    juce::Label logoName;
 
 private:
     juce::DropShadower shadow = juce::DropShadower(juce::DropShadow());
