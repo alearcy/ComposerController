@@ -16,29 +16,33 @@
 //using namespace Utilities;
 
 //==============================================================================
-Fader::Fader()
+Fader::Fader(juce::ValueTree& v)
 {
-    init("default");
+    init(v, "CC1");
 }
 
-Fader::Fader(juce::String name)
+Fader::Fader(juce::ValueTree& v, juce::String name)
 {
-    init(name);
+    init(v, name);
 }
 
 Fader::~Fader()
 {
 }
 
-void Fader::init(juce::String name)
+void Fader::init(juce::ValueTree& v, juce::String name)
 {
+    v.addListener(this);
+    auto isEditin = v.getProperty("isEditing").toString();
+    DBG(juce::String(isEditin));
     // create constraints for resize and position
     movableConstraints.setMinimumOnscreenAmounts(faderHeight, faderWidth, faderHeight, faderWidth);
     resizableConstraints.setMinimumSize(faderWidth, faderHeight);
     resizableConstraints.setMaximumSize(faderWidth * 2, getParentHeight() - 200);
 
     // create resizable corner component to add to fader
-    addAndMakeVisible(resizableCorner);
+    if (isEditingMode)
+        addAndMakeVisible(resizableCorner);
 
     // create slider component
     addAndMakeVisible(slider);
@@ -76,12 +80,41 @@ void Fader::resized()
 
 void Fader::mouseDown(const juce::MouseEvent& event)
 {
-    startDraggingComponent(this, event);
+    if (isEditingMode)
+    {
+        startDraggingComponent(this, event);
+    }
+    else
+    {
+        return;
+    }
 }
 
 void Fader::mouseDrag(const juce::MouseEvent& event)
 {
-    
-    dragComponent(this, event, &movableConstraints);
-    Utility::setRoundedPosition(*this, 20);
+    if (isEditingMode) 
+    {
+        dragComponent(this, event, &movableConstraints);
+        Utility::setRoundedPosition(*this, 20);
+    }
+    else 
+    {
+        return;
+    }
+}
+
+void Fader::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
+    const juce::Identifier& property)
+{
+    auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
+    isEditingMode = value;
+    if (value)
+    {
+        addAndMakeVisible(resizableCorner);
+        repaint();
+    }
+    else
+    {
+       resizableCorner.setVisible(false);
+    }
 }

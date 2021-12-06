@@ -19,12 +19,14 @@
 */
 
 class Fader  : public juce::Component, 
-               //public juce::ChangeBroadcaster,
+               public juce::ValueTree::Listener,
                public juce::ComponentDragger
 {
 public:
-    Fader();
-    Fader(juce::String name);
+    Fader(juce::ValueTree& v);
+ 
+    Fader(juce::ValueTree& v, juce::String name);
+    
     ~Fader() override;
 
     static int const faderWidth = 90;
@@ -50,10 +52,13 @@ public:
 
 
 private:
+    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
     juce::ComponentBoundsConstrainer movableConstraints;
     juce::ComponentBoundsConstrainer resizableConstraints;
     juce::ResizableCornerComponent resizableCorner = juce::ResizableCornerComponent(this, &resizableConstraints);
     juce::Slider slider;
-    void init(juce::String name);
+    void init(juce::ValueTree& v, juce::String name);
+    bool isEditingMode = false;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Fader)
 };

@@ -1,11 +1,23 @@
 #include <JuceHeader.h>
 #include "Header.h"
+#include "Utilities.h"
 
 //==============================================================================
-Header::Header()
+Header::Header(juce::ValueTree& v)
 {
     addAndMakeVisible(editBtn);
-    editBtn.setButtonText("edit");
+    editBtn.setToggleState(false, juce::NotificationType::dontSendNotification);
+    editBtn.onClick = [&]() { 
+        auto buttonState = editBtn.getToggleState();
+        if (!buttonState) {
+            editBtn.setToggleState(true, juce::NotificationType::dontSendNotification);
+            v.setProperty("isEditing", true, nullptr); 
+        }
+        else {
+            editBtn.setToggleState(false, juce::NotificationType::dontSendNotification);
+            v.setProperty("isEditing", false, nullptr);
+        }
+    };
     addAndMakeVisible(logoName);
     logoName.setText(juce::String("Composer Controller"), juce::NotificationType::dontSendNotification);
     shadow.setOwner(this);
@@ -15,6 +27,7 @@ Header::~Header()
 {
 }
 
+//==============================================================================
 void Header::paint (juce::Graphics& g)
 {
     g.fillAll (juce::Colour(0xff37383c));

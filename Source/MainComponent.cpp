@@ -4,14 +4,15 @@
 //==============================================================================
 MainComponent::MainComponent()
 {   
-    auto fader = std::make_unique<Fader>("c11");
+    initializeStore();
+    auto fader = std::make_unique<Fader>(store, "c11");
     fader->tabId = "1";
     fader->ccNumber = 11;
     fader->ccValue = 50;
     //fader->addChangeListener(this);
     faders.push_back(std::move(fader));
 
-    auto fader2 = std::make_unique<Fader>("c1");
+    auto fader2 = std::make_unique<Fader>(store, "c1");
     fader2->tabId = "1";
     fader2->ccNumber = 1;
     fader2->ccValue = 50;
@@ -80,8 +81,14 @@ void MainComponent::resized()
         p->setBounds(x, y, p->getWidth(), p->getHeight());
     }
 
+    // TODO: move this in tab component in a FlexBox like header
     for (auto &t : tabs)
     {
         t->setBounds(mainArea.removeFromTop(tabsHeight));
     }
+}
+
+void MainComponent::initializeStore()
+{
+    store = Utility::store();
 }
