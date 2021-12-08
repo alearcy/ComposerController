@@ -1,19 +1,7 @@
-/*
-  ==============================================================================
-
-    Fader.cpp
-    Created: 16 Nov 2021 7:35:16pm
-    Author:  arcid
-
-  ==============================================================================
-*/
-
 #include <JuceHeader.h>
 #include <cmath>
 #include "Fader.h"
 #include "Utilities.h"
-
-//using namespace Utilities;
 
 //==============================================================================
 Fader::Fader(juce::ValueTree& v)
@@ -33,8 +21,6 @@ Fader::~Fader()
 void Fader::init(juce::ValueTree& v, juce::String name)
 {
     v.addListener(this);
-    auto isEditin = v.getProperty("isEditing").toString();
-    DBG(juce::String(isEditin));
     // create constraints for resize and position
     movableConstraints.setMinimumOnscreenAmounts(faderHeight, faderWidth, faderHeight, faderWidth);
     resizableConstraints.setMinimumSize(faderWidth, faderHeight);
@@ -58,11 +44,8 @@ void Fader::init(juce::ValueTree& v, juce::String name)
     faderLabel.setText(name, juce::NotificationType::dontSendNotification);
     faderLabel.setJustificationType(juce::Justification::centred);
     faderLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-
-    // set fader sizes from default values
-    setSize(faderWidth, faderHeight);
 }
-
+//==============================================================================
 
 void Fader::paint (juce::Graphics& g)
 {
@@ -75,7 +58,6 @@ void Fader::resized()
     slider.setBounds(0, 0, getWidth(), getHeight() - 50);
     faderLabel.setBounds(10, getHeight() - 25, getWidth() - 20, 30);
     resizableCorner.setBounds(getWidth() - 20, getHeight() - 20, 15, 15);
-    setTopLeftPosition(20, 90);
 }
 
 void Fader::mouseDown(const juce::MouseEvent& event)
@@ -111,7 +93,6 @@ void Fader::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChange
     if (value)
     {
         addAndMakeVisible(resizableCorner);
-        repaint();
     }
     else
     {

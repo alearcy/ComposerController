@@ -9,15 +9,14 @@ MainComponent::MainComponent()
     fader->tabId = "1";
     fader->ccNumber = 11;
     fader->ccValue = 50;
-    //fader->addChangeListener(this);
+    fader->setBounds(20, 90, 90, 450);
     faders.push_back(std::move(fader));
 
     auto fader2 = std::make_unique<Fader>(store, "c1");
     fader2->tabId = "1";
     fader2->ccNumber = 1;
     fader2->ccValue = 50;
-    //fader2->addChangeListener(this);
-    //fader2->setBounds(300, 100, 90, 450);
+    fader2->setBounds(130, 90, 90, 450);
     faders.push_back(std::move(fader2));
     
     for (auto &f : faders)
@@ -27,7 +26,6 @@ MainComponent::MainComponent()
     pad->tabId = "1";
     pad->ccNumber = 11;
     pad->ccValue = 50;
-    //pad->addChangeListener(this);
     pads.push_back(std::move(pad));
 
     for (auto &p : pads)
