@@ -1,13 +1,3 @@
-/*
-  ==============================================================================
-
-    Pad.cpp
-    Created: 28 Nov 2021 6:51:00pm
-    Author:  arcid
-
-  ==============================================================================
-*/
-
 #include <JuceHeader.h>
 #include "Pad.h"
 #include "Utilities.h"
@@ -15,8 +5,6 @@
 //==============================================================================
 Pad::Pad()
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
     init("default");
 }
 
@@ -39,10 +27,9 @@ void Pad::paint (juce::Graphics& g)
 
 void Pad::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
     button.setBounds(0, 0, getWidth(), getHeight() - 50);
-    setTopLeftPosition(20, 90);
+    resizableCorner.setBounds(getWidth() - 20, getHeight() - 20, 15, 15);
+    //setTopLeftPosition(20, 90);
 }
 
 void Pad::init(juce::String name)

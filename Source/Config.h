@@ -1,16 +1,18 @@
-/*
-  ==============================================================================
-
-    Config.h
-    Created: 28 Nov 2021 7:16:31pm
-    Author:  arcid
-
-  ==============================================================================
-*/
-
 #pragma once
-enum MidiType {
-    ControlChange,
-    NoteOn,
-    Pitch
-};
+
+namespace Config
+{
+    enum MidiType {
+        CONTROLCHANGE,
+        NOTEON,
+        PITCH
+    };
+
+    enum ComponentSizes
+    {
+        FADERWIDTH = 90,
+        FADERHEIGHT = 450,
+        PADWIDTH = 120,
+        PADHEIGHT = 100
+    };
+}

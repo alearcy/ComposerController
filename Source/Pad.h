@@ -1,13 +1,3 @@
-/*
-  ==============================================================================
-
-    Pad.h
-    Created: 28 Nov 2021 6:51:00pm
-    Author:  arcid
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include <JuceHeader.h>
@@ -24,9 +14,6 @@ public:
     Pad(juce::String name);
     ~Pad() override;
 
-    static int const padWidth = 120;
-    static int const padHeight = 100;
-
     void paint (juce::Graphics&) override;
     void resized() override;
 
@@ -40,8 +27,10 @@ public:
     int midiChannel = 1; // midi channel
     int ccNumber; // cc number like cc11
     int ccValue; // cc value like 127
-    MidiType midiType = MidiType::NoteOn;
+    Config::MidiType midiType = Config::MidiType::NOTEON;
     juce::Colour color = juce::Colours::coral; // default fader color
+    int padWidth = Config::ComponentSizes::PADWIDTH;
+    int padHeight = Config::ComponentSizes::PADHEIGHT;
 
 private:
     juce::ComponentBoundsConstrainer movableConstraints;

@@ -29,9 +29,6 @@ public:
     
     ~Fader() override;
 
-    static int const faderWidth = 90;
-    static int const faderHeight = 450;
-
     void paint (juce::Graphics&) override;
     //void sendMidiMessage()
     void resized() override;
@@ -47,8 +44,10 @@ public:
     int ccValue; // cc value like 127
     int minValue = 0;
     int maxValue = 127;
-    MidiType midiType = MidiType::ControlChange;
+    Config::MidiType midiType = Config::MidiType::CONTROLCHANGE;
     juce::Colour color = juce::Colours::coral; // default fader color
+    int faderWidth = Config::ComponentSizes::FADERWIDTH;
+    int faderHeight = Config::ComponentSizes::FADERHEIGHT;
 
 
 private:
