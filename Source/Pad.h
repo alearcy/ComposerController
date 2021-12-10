@@ -3,12 +3,12 @@
 #include <JuceHeader.h>
 #include "Config.h"
 #include "ButtonCustomStyle.h"
+#include "CustomDragComponent.h"
 
 //==============================================================================
 /*
 */
 class Pad  : public juce::Component,
-             public juce::ComponentDragger,
              public juce::ValueTree::Listener
 {
 public:
@@ -40,9 +40,10 @@ private:
     juce::ComponentBoundsConstrainer resizableConstraints;
     juce::ResizableCornerComponent resizableCorner = juce::ResizableCornerComponent(this, &resizableConstraints);
     juce::TextButton button;
-    juce::LookAndFeel_V4 btnLookAndFeel;
+    juce::TextButton moveButton;
     void init(juce::ValueTree& v, juce::String name);
     bool isEditingMode = false;
     ButtonCustomStyle buttonCustomStyle;
+    CustomDragComponent dragComponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pad)
 };

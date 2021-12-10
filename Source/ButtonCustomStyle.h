@@ -4,10 +4,7 @@
 class ButtonCustomStyle : public juce::LookAndFeel_V4
 {
 public:
-    ButtonCustomStyle()
-    {
-        setColour(juce::Slider::thumbColourId, juce::Colours::red);
-    }
+    ButtonCustomStyle() {}
 
     void drawButtonBackground(juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,
         bool, bool isButtonDown) override
@@ -16,8 +13,5 @@ public:
         g.setFont(juce::Font(16.0f));
         g.setColour(isButtonDown ? backgroundColour.darker(0.5f) : backgroundColour);
         g.fillRect(buttonArea);
-
-        g.fillRect(buttonArea);
     }
-
 };

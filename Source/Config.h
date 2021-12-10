@@ -13,6 +13,6 @@ namespace Config
         FADERWIDTH = 90,
         FADERHEIGHT = 450,
         PADWIDTH = 120,
-        PADHEIGHT = 100
+        PADHEIGHT = 70
     };
 }

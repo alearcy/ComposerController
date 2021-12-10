@@ -2,15 +2,14 @@
 
 #include <JuceHeader.h>
 #include "Config.h"
-
+#include "CustomDragComponent.h"
 
 //==============================================================================
 /*
 */
 
 class Fader  : public juce::Component, 
-               public juce::ValueTree::Listener,
-               public juce::ComponentDragger
+               public juce::ValueTree::Listener
 {
 public:
     Fader(juce::ValueTree& v);
@@ -48,6 +47,6 @@ private:
     juce::Slider slider;
     void init(juce::ValueTree& v, juce::String name);
     bool isEditingMode = false;
-
+    CustomDragComponent dragComponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Fader)
 };
