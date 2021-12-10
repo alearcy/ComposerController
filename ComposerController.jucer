@@ -7,6 +7,8 @@
               cppLanguageStandard="17">
   <MAINGROUP id="SJuTrP" name="ComposerController">
     <GROUP id="{05F82070-6192-7F42-DA51-1947DCA5E6A3}" name="Source">
+      <FILE id="YYmxM4" name="ButtonCustomStyle.h" compile="0" resource="0"
+            file="Source/ButtonCustomStyle.h"/>
       <FILE id="ZgHfYM" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="hzAjKJ" name="Fader.cpp" compile="1" resource="0" file="Source/Fader.cpp"/>
       <FILE id="y5TES3" name="Fader.h" compile="0" resource="0" file="Source/Fader.h"/>

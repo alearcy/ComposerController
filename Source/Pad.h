@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "Config.h"
+#include "ButtonCustomStyle.h"
 
 //==============================================================================
 /*
@@ -39,7 +40,9 @@ private:
     juce::ComponentBoundsConstrainer resizableConstraints;
     juce::ResizableCornerComponent resizableCorner = juce::ResizableCornerComponent(this, &resizableConstraints);
     juce::TextButton button;
+    juce::LookAndFeel_V4 btnLookAndFeel;
     void init(juce::ValueTree& v, juce::String name);
     bool isEditingMode = false;
+    ButtonCustomStyle buttonCustomStyle;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pad)
 };

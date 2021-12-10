@@ -20,8 +20,11 @@ Pad::~Pad()
 
 void Pad::paint (juce::Graphics& g)
 {
+    juce::Path p;
+    p.addRectangle(button.getBounds());
     g.setFont(juce::Font(16.0f));
     g.setColour(juce::Colours::white);
+    g.strokePath(p, juce::PathStrokeType(0.0f));
     
 }
 
@@ -48,9 +51,9 @@ void Pad::init(juce::ValueTree& v, juce::String name)
 
 
     addAndMakeVisible(button);
+    button.setLookAndFeel(&buttonCustomStyle);
     button.setButtonText(name);
     button.setColour(juce::TextButton::buttonColourId, color);
-    
 }
 
 void Pad::mouseDown(const juce::MouseEvent& event)
