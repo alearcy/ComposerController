@@ -5,7 +5,7 @@
 //==============================================================================
 Pad::Pad(juce::ValueTree& v)
 {
-    init(v, "default");
+    init(v, "Pad");
 }
 
 Pad::Pad(juce::ValueTree& v, juce::String name)
@@ -15,24 +15,18 @@ Pad::Pad(juce::ValueTree& v, juce::String name)
 
 Pad::~Pad()
 {
-
+    button.setLookAndFeel(nullptr);
 }
 
 void Pad::paint (juce::Graphics& g)
 {
-    juce::Path p;
-    p.addRectangle(button.getBounds());
-    g.setFont(juce::Font(16.0f));
     g.setColour(juce::Colours::white);
-    g.strokePath(p, juce::PathStrokeType(0.0f));
-    
 }
 
 void Pad::resized()
 {
     button.setBounds(0, 0, getWidth(), getHeight() - 50);
-    resizableCorner.setBounds(getWidth() - 20, getHeight() - 20, 15, 15);
-    
+    resizableCorner.setBounds(button.getWidth() - 15, button.getHeight() - 15, 15, 15);
 }
 
 void Pad::init(juce::ValueTree& v, juce::String name)

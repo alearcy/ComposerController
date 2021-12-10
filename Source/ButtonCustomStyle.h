@@ -13,7 +13,7 @@ public:
         bool, bool isButtonDown) override
     {
         auto buttonArea = button.getLocalBounds();
-
+        g.setFont(juce::Font(16.0f));
         g.setColour(isButtonDown ? backgroundColour.darker(0.5f) : backgroundColour);
         g.fillRect(buttonArea);
 

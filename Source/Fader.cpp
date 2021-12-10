@@ -21,6 +21,8 @@ Fader::~Fader()
 void Fader::init(juce::ValueTree& v, juce::String name)
 {
     v.addListener(this);
+    // add mouse lister to the resizable corner
+    resizableCorner.addMouseListener(this, false);
     // create constraints for resize and position
     movableConstraints.setMinimumOnscreenAmounts(faderHeight, faderWidth, faderHeight, faderWidth);
     resizableConstraints.setMinimumSize(faderWidth, faderHeight);
@@ -74,14 +76,17 @@ void Fader::mouseDown(const juce::MouseEvent& event)
 
 void Fader::mouseDrag(const juce::MouseEvent& event)
 {
-    if (isEditingMode) 
+    if (isEditingMode)
     {
-        dragComponent(this, event, &movableConstraints);
-        Utility::setRoundedPosition(*this, 20);
-    }
-    else 
-    {
-        return;
+        if (event.eventComponent == this)
+        {
+            dragComponent(this, event, &movableConstraints);
+            Utility::setRoundedPosition(*this, 20);
+        }
+        if (event.eventComponent == &resizableCorner)
+        {
+            Utility::setRoundedSizes(*this, 20);
+        }
     }
 }
 
