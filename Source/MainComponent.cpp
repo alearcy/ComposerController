@@ -22,7 +22,7 @@ MainComponent::MainComponent()
     for (auto &f : faders)
         addAndMakeVisible(*f);
 
-    auto pad = std::make_unique<Pad>("Show active");
+    auto pad = std::make_unique<Pad>(store, "Show active");
     pad->tabId = "1";
     pad->ccNumber = 11;
     pad->ccValue = 50;

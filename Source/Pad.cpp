@@ -3,14 +3,14 @@
 #include "Utilities.h"
 
 //==============================================================================
-Pad::Pad()
+Pad::Pad(juce::ValueTree& v)
 {
-    init("default");
+    init(v, "default");
 }
 
-Pad::Pad(juce::String name)
+Pad::Pad(juce::ValueTree& v, juce::String name)
 {
-    init(name);
+    init(v, name);
 }
 
 Pad::~Pad()
@@ -29,34 +29,68 @@ void Pad::resized()
 {
     button.setBounds(0, 0, getWidth(), getHeight() - 50);
     resizableCorner.setBounds(getWidth() - 20, getHeight() - 20, 15, 15);
-    //setTopLeftPosition(20, 90);
+    
 }
 
-void Pad::init(juce::String name)
+void Pad::init(juce::ValueTree& v, juce::String name)
 {
+    v.addListener(this);
+    // add mouse lister to the resizable corner
+    resizableCorner.addMouseListener(this, false);
     // create constraints for resize and position
     movableConstraints.setMinimumOnscreenAmounts(padHeight, padWidth, padHeight, padWidth);
     resizableConstraints.setMinimumSize(padWidth, padHeight);
-    resizableConstraints.setMaximumSize(padWidth * 2, getParentHeight() - 35);
+    resizableConstraints.setMaximumSize(padWidth * 2, padHeight * 2);
 
-    // create resizable corner component to add to fader
-    addAndMakeVisible(resizableCorner);
+    // create resizable corner component to add to pad
+    if (isEditingMode)
+        addAndMakeVisible(resizableCorner);
+
 
     addAndMakeVisible(button);
     button.setButtonText(name);
     button.setColour(juce::TextButton::buttonColourId, color);
-
-    setSize(padWidth, padHeight);
     
 }
 
 void Pad::mouseDown(const juce::MouseEvent& event)
 {
-    startDraggingComponent(this, event);
+    if (isEditingMode)
+    {
+        if (event.eventComponent == this)
+        {
+            startDraggingComponent(this, event);
+        }
+    }
 }
 
 void Pad::mouseDrag(const juce::MouseEvent& event)
 {
-    dragComponent(this, event, &movableConstraints);
-    Utility::setRoundedPosition(*this, 20);
+    if (isEditingMode)
+    {
+        if (event.eventComponent == this)
+        {
+            dragComponent(this, event, &movableConstraints);
+            Utility::setRoundedPosition(*this, 20);
+        }
+        if (event.eventComponent == &resizableCorner)
+        {
+            Utility::setRoundedSizes(*this, 20);
+        }
+    }
+}
+
+void Pad::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
+    const juce::Identifier& property)
+{
+    auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
+    isEditingMode = value;
+    if (value)
+    {
+        addAndMakeVisible(resizableCorner);
+    }
+    else
+    {
+        resizableCorner.setVisible(false);
+    }
 }
