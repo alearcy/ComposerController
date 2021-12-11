@@ -6,7 +6,7 @@
 //==============================================================================
 Fader::Fader(juce::ValueTree& v)
 {
-    init(v, "CC1");
+    init(v, "Fader");
 }
 
 Fader::Fader(juce::ValueTree& v, juce::String name)
@@ -62,8 +62,8 @@ void Fader::paint (juce::Graphics& g)
 
 void Fader::resized()
 {
-    slider.setBounds(0, 0, getWidth(), getHeight() - 50);
-    faderLabel.setBounds(10, getHeight() - 25, getWidth() - 20, 30);
+    slider.setBounds(0, 0, getWidth(), getHeight() - 25);
+    faderLabel.setBounds(10, getHeight() - 20, getWidth() - 20, 30);
     resizableCorner.setBounds(getWidth() - 20, getHeight() - 20, 15, 15);
     dragComponent.setBounds(5, slider.getHeight() - 20, 15, 15);
 }

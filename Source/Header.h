@@ -5,7 +5,7 @@
 //==============================================================================
 /*
 */
-class Header  : public juce::Component
+class Header  : public juce::Component, public juce::ValueTree::Listener
 {
 public:
     Header(juce::ValueTree& v);
@@ -14,9 +14,13 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     juce::TextButton editBtn { "Edit" };
+    juce::TextButton addFader { "Add fader" };
+    juce::TextButton addPad { "Add pad" };
     juce::Label logoName;
 
 private:
+    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
     juce::DropShadower shadow = juce::DropShadower(juce::DropShadow());
+    bool isEditingMode;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Header)
 };

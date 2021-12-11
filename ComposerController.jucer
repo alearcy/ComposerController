@@ -7,8 +7,6 @@
               cppLanguageStandard="17">
   <MAINGROUP id="SJuTrP" name="ComposerController">
     <GROUP id="{05F82070-6192-7F42-DA51-1947DCA5E6A3}" name="Source">
-      <FILE id="xJfe3i" name="CustomDragComponent.cpp" compile="1" resource="0"
-            file="Source/CustomDragComponent.cpp"/>
       <FILE id="jCBGd9" name="CustomDragComponent.h" compile="0" resource="0"
             file="Source/CustomDragComponent.h"/>
       <FILE id="voY5wJ" name="DragComponent.h" compile="0" resource="0" file="Source/DragComponent.h"/>

@@ -11,7 +11,7 @@ namespace Config
     enum ComponentSizes
     {
         FADERWIDTH = 90,
-        FADERHEIGHT = 450,
+        FADERHEIGHT = 430,
         PADWIDTH = 120,
         PADHEIGHT = 70
     };
