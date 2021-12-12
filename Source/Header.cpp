@@ -1,6 +1,7 @@
 #include <JuceHeader.h>
 #include "Header.h"
 #include "Utilities.h"
+#include "Config.h"
 
 //==============================================================================
 Header::Header(juce::ValueTree& v)
@@ -25,7 +26,19 @@ Header::Header(juce::ValueTree& v)
     };
     addPad.onClick = [&]()
     {
-        v.setProperty("isEditing", true, nullptr);
+        auto padsArray = v.getChildWithName("Pads");
+        juce::Identifier pad("pad-9");
+        juce::ValueTree newPad(pad);
+        newPad.setProperty("name", "Pause", nullptr);
+        newPad.setProperty("tabId", 1, nullptr);
+        newPad.setProperty("x", 20, nullptr);
+        newPad.setProperty("y", 90, nullptr);
+        newPad.setProperty("w", Config::PADWIDTH, nullptr);
+        newPad.setProperty("h", Config::PADHEIGHT, nullptr);
+        newPad.setProperty("ccNumber", 11, nullptr);
+        newPad.setProperty("ccValue", 50, nullptr);
+        padsArray.appendChild(newPad, nullptr);
+        
     };
     addAndMakeVisible(logoName);
     logoName.setText(juce::String("Composer Controller"), juce::NotificationType::dontSendNotification);

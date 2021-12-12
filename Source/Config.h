@@ -15,4 +15,16 @@ namespace Config
         PADWIDTH = 120,
         PADHEIGHT = 70
     };
+
+    struct PAD
+    {
+        juce::String name;
+        int tabId;
+        int ccNumber;
+        int ccValue;
+        int x;
+        int y;
+        int w;
+        int h;
+    };
 }

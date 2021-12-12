@@ -31,8 +31,11 @@ public:
     int ccValue; // cc value like 127
     Config::MidiType midiType = Config::MidiType::NOTEON;
     juce::Colour color = juce::Colours::coral; // default fader color
-    int padWidth = Config::ComponentSizes::PADWIDTH;
-    int padHeight = Config::ComponentSizes::PADHEIGHT;
+    int w = Config::ComponentSizes::PADWIDTH;
+    int h = Config::ComponentSizes::PADHEIGHT;
+    int x;
+    int y;
+    bool isEditingMode = false;
 
 private:
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
@@ -42,7 +45,6 @@ private:
     juce::TextButton button;
     juce::TextButton moveButton;
     void init(juce::ValueTree& v, juce::String name);
-    bool isEditingMode = false;
     ButtonCustomStyle buttonCustomStyle;
     CustomDragComponent dragComponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pad)

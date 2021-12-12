@@ -37,9 +37,9 @@ void Pad::init(juce::ValueTree& v, juce::String name)
     resizableCorner.addMouseListener(this, false);
     dragComponent.addMouseListener(this, false);
     // create constraints for resize and position
-    movableConstraints.setMinimumOnscreenAmounts(padHeight, padWidth, padHeight, padWidth);
-    resizableConstraints.setMinimumSize(padWidth, padHeight);
-    resizableConstraints.setMaximumSize(padWidth * 2, padHeight * 2);
+    movableConstraints.setMinimumOnscreenAmounts(h, w, h, w);
+    resizableConstraints.setMinimumSize(w, h);
+    resizableConstraints.setMaximumSize(w * 2, h * 2);
 
     // create resizable corner component to add to pad
     if (isEditingMode)

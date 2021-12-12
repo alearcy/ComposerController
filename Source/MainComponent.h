@@ -12,7 +12,7 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent  : public juce::Component
+class MainComponent  : public juce::Component, public juce::ValueTree::Listener
 {
 public:
     //==============================================================================
@@ -34,5 +34,7 @@ public:
     juce::ValueTree store;
 
 private:
+    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
+    virtual void valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded);
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
