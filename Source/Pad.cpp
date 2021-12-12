@@ -3,14 +3,14 @@
 #include "Utilities.h"
 
 //==============================================================================
-Pad::Pad(juce::ValueTree& v)
+Pad::Pad(juce::ValueTree& store)
 {
-    init(v, "Pad");
+    init(store, "Pad");
 }
 
-Pad::Pad(juce::ValueTree& v, juce::String name)
+Pad::Pad(juce::ValueTree& store, juce::String name)
 {
-    init(v, name);
+    init(store, name);
 }
 
 Pad::~Pad()
@@ -18,28 +18,19 @@ Pad::~Pad()
     button.setLookAndFeel(nullptr);
 }
 
-void Pad::paint (juce::Graphics& g)
+void Pad::init(juce::ValueTree& store, juce::String name)
 {
-    g.setColour(juce::Colours::white);
-}
-
-void Pad::resized()
-{
-    button.setBounds(getLocalBounds());
-    resizableCorner.setBounds(button.getWidth() - 15, button.getHeight() - 15, 15, 15);
-    dragComponent.setBounds(5, button.getHeight() - 20, 15, 15);
-}
-
-void Pad::init(juce::ValueTree& v, juce::String name)
-{
-    v.addListener(this);
+    store.addListener(this);
     // add mouse lister to the resizable corner and drag components
     resizableCorner.addMouseListener(this, false);
     dragComponent.addMouseListener(this, false);
     // create constraints for resize and position
-    movableConstraints.setMinimumOnscreenAmounts(h, w, h, w);
-    resizableConstraints.setMinimumSize(w, h);
-    resizableConstraints.setMaximumSize(w * 2, h * 2);
+    if (h != 0 && w != 0)
+    {
+        movableConstraints.setMinimumOnscreenAmounts(h, w, h, w);
+        resizableConstraints.setMinimumSize(w, h);
+        resizableConstraints.setMaximumSize(w * 2, h * 2);
+    }
 
     // create resizable corner component to add to pad
     if (isEditingMode)
@@ -55,6 +46,19 @@ void Pad::init(juce::ValueTree& v, juce::String name)
     button.setColour(juce::TextButton::buttonColourId, color);
 
 
+}
+//==============================================================================
+
+void Pad::paint(juce::Graphics& g)
+{
+    g.setColour(juce::Colours::white);
+}
+
+void Pad::resized()
+{
+    button.setBounds(getLocalBounds());
+    resizableCorner.setBounds(button.getWidth() - 15, button.getHeight() - 15, 15, 15);
+    dragComponent.setBounds(5, button.getHeight() - 20, 15, 15);
 }
 
 void Pad::mouseDown(const juce::MouseEvent& event)
@@ -87,18 +91,25 @@ void Pad::mouseDrag(const juce::MouseEvent& event)
 void Pad::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
     const juce::Identifier& property)
 {
-    auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
-    isEditingMode = value;
-    if (value)
+    if (property.toString() == "isEditingMode")
     {
-        addAndMakeVisible(resizableCorner);
-        addAndMakeVisible(dragComponent);
-        button.setEnabled(false);
+        auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
+        isEditingMode = value;
+        if (value)
+        {
+            addAndMakeVisible(resizableCorner);
+            addAndMakeVisible(dragComponent);
+            button.setEnabled(false);
+        }
+        else
+        {
+            resizableCorner.setVisible(false);
+            dragComponent.setVisible(false);
+            button.setEnabled(true);
+        }
     }
     else
     {
-        resizableCorner.setVisible(false);
-        dragComponent.setVisible(false);
-        button.setEnabled(true);
+        return;
     }
 }

@@ -1,29 +1,13 @@
 #include "MainComponent.h"
-
+#include "Store.h"
+#include "Utilities.h"
 
 //==============================================================================
 MainComponent::MainComponent()
 {   
     initializeStore();
-    auto fader = std::make_unique<Fader>(store, "Fader");
-    fader->tabId = "1";
-    fader->ccNumber = 11;
-    fader->ccValue = 50;
-    fader->setBounds(20, 90, fader->faderWidth, fader->faderHeight);
-    faders.push_back(std::move(fader));
 
-    auto fader2 = std::make_unique<Fader>(store, "Fader");
-    fader2->tabId = "1";
-    fader2->ccNumber = 1;
-    fader2->ccValue = 50;
-    fader2->setBounds(130, 90, fader2->faderWidth, fader2->faderHeight);
-    faders.push_back(std::move(fader2));
-    
-    for (auto &f : faders)
-        addAndMakeVisible(*f);
-
-
-
+    //TODO: make active tab and generate UUID
     auto tab = std::make_unique<Tab>();
     tab->id = "1";
     tabs.push_back(std::move(tab));
@@ -54,18 +38,20 @@ void MainComponent::resized()
     auto headerHeight = 40;
     auto tabsHeight = 40;
     header.setBounds(mainArea.removeFromTop(headerHeight));
-
-
-    for (auto &f : faders)
+    if (pads.size() > 0)
     {
-        int x = f->getBounds().getX();
-        int y = f->getBounds().getY();
-        f->setBounds(x, y, f->getWidth(), f->getHeight());
+        for (auto &p : pads)
+        {
+            p->setBounds(p->x, p->y, p->w, p->h);
+        }
     }
 
-    for (auto &p : pads)
+    if (faders.size() > 0)
     {
-        p->setBounds(p->x, p->y, p->w, p->h);
+        for (auto& f : faders)
+        {
+            f->setBounds(f->x, f->y, f->w, f->h);
+        }
     }
 
     // TODO: move this in tab component in a FlexBox like header
@@ -77,7 +63,7 @@ void MainComponent::resized()
 
 void MainComponent::initializeStore()
 {
-    store = Utility::store();
+    store = Store::store();
     store.addListener(this);
 
     DBG(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + juce::File::getSeparatorString() + "CCStore.xml");
@@ -92,12 +78,13 @@ void MainComponent::initializeStore()
 
     // Replace default store ValueTree with the loaded one
     store.copyPropertiesAndChildrenFrom(juce::ValueTree::fromXml(*xml), nullptr);
-    auto padsArray = store.getChildWithName("Pads");
-    if (padsArray.isValid())
+    auto padsFromStore = store.getChildWithName("Pads");
+    auto fadersFromStore = store.getChildWithName("Faders");
+    if (padsFromStore.getNumChildren() > 0)
     {
-        for (auto& pad : padsArray)
+        for (auto& pad : padsFromStore)
         {
-            auto newPad = Utility::createPadFromStore(pad, store, false);
+            auto newPad = Store::createPadFromStore(pad, store, false);
             pads.push_back(std::move(newPad));
             for (auto& p : pads)
             {
@@ -105,30 +92,55 @@ void MainComponent::initializeStore()
             }
         }
     }
-    else
+    if (fadersFromStore.getNumChildren() > 0)
     {
-        DBG("Non valido");
+        for (auto& fader : fadersFromStore)
+        {
+            auto newFader = Store::createFaderFromStore(fader, store, false);
+            faders.push_back(std::move(newFader));
+            for (auto& p : faders)
+            {
+                addAndMakeVisible(*p);
+            }
+        }
     }
-    
 }
 
-void MainComponent::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
-    const juce::Identifier& property)
-{
-    auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
-}
+//void MainComponent::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
+//    const juce::Identifier& property)
+//{
+//    if (property.toString() == "isEditing")
+//    {
+//        auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
+//       
+//    }
+//    else
+//    {
+//        return;
+//    }
+//}
 
 void MainComponent::valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded)
 {
     DBG(store.getRoot().toXmlString());
-    DBG(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + juce::File::getSeparatorString() + "CCStore.xml");
-    std::unique_ptr<juce::XmlElement> xml(store.createXml());
-    xml->writeTo(juce::File(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + "CCStore.xml"), juce::XmlElement::TextFormat());
-    
-    auto newPad = Utility::createPadFromStore(childWhichHasBeenAdded, store, true);
-    pads.push_back(std::move(newPad));
-    for (auto& p : pads)
+    juce::String componentType = childWhichHasBeenAdded.getType().toString();
+    if (componentType == "Pad")
     {
-        addAndMakeVisible(*p);
+        auto newPad = Store::createPadFromStore(childWhichHasBeenAdded, store, true);
+        pads.push_back(std::move(newPad));
+        for (auto& p : pads)
+        {
+            addAndMakeVisible(*p);
+        }
     }
+    if (componentType == "Fader")
+    {
+        auto newFader = Store::createFaderFromStore(childWhichHasBeenAdded, store, true);
+        faders.push_back(std::move(newFader));
+        for (auto& p : faders)
+        {
+            addAndMakeVisible(*p);
+        }
+    }
+
 }

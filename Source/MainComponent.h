@@ -6,13 +6,14 @@
 #include "Footer.h"
 #include "Tab.h"
 #include "Pad.h"
-#include "Utilities.h"
+
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent  : public juce::Component, public juce::ValueTree::Listener
+class MainComponent  : public juce::Component, 
+                       public juce::ValueTree::Listener
 {
 public:
     //==============================================================================
@@ -21,9 +22,10 @@ public:
 
     //==============================================================================
     void paint (juce::Graphics&) override;
-    //void changeListenerCallback(juce::ChangeBroadcaster* source);
     void resized() override;
     void initializeStore();
+
+    juce::ValueTree store;
 
     std::vector<std::unique_ptr<Fader>> faders;
     std::vector<std::unique_ptr<Pad>> pads;
@@ -31,10 +33,9 @@ public:
     Header header = Header(store);
     Footer footer;
 
-    juce::ValueTree store;
 
 private:
-    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
-    virtual void valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded);
+    //void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
+    void valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded) override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

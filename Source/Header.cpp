@@ -2,33 +2,40 @@
 #include "Header.h"
 #include "Utilities.h"
 #include "Config.h"
+#include "Store.h"
 
 //==============================================================================
-Header::Header(juce::ValueTree& v)
+Header::Header(juce::ValueTree& store)
 {
+    //store.addListener(this);
     addAndMakeVisible(editBtn);
     editBtn.setToggleState(false, juce::NotificationType::dontSendNotification);
     editBtn.onClick = [&]() 
     { 
         auto buttonState = editBtn.getToggleState();
         if (!buttonState) {
+            isEditingMode = true;
             editBtn.setToggleState(true, juce::NotificationType::dontSendNotification);
-            v.setProperty("isEditing", true, nullptr);
+            store.setProperty("isEditing", true, nullptr);
             addAndMakeVisible(addPad);
             addAndMakeVisible(addFader);
         }
         else {
+            isEditingMode = false;
             editBtn.setToggleState(false, juce::NotificationType::dontSendNotification);
-            v.setProperty("isEditing", false, nullptr);
+            store.setProperty("isEditing", false, nullptr);
             addPad.setVisible(false);
             addFader.setVisible(false);
+            Store::exportStoreToXML(store);
         }
     };
     addPad.onClick = [&]()
     {
-        auto padsArray = v.getChildWithName("Pads");
-        juce::Identifier pad("pad-9");
+        juce::String UUID = juce::Uuid::Uuid().toString();
+        auto pads = store.getChildWithName("Pads");
+        juce::Identifier pad("Pad");
         juce::ValueTree newPad(pad);
+        newPad.setProperty("id", UUID, nullptr);
         newPad.setProperty("name", "Pause", nullptr);
         newPad.setProperty("tabId", 1, nullptr);
         newPad.setProperty("x", 20, nullptr);
@@ -37,9 +44,27 @@ Header::Header(juce::ValueTree& v)
         newPad.setProperty("h", Config::PADHEIGHT, nullptr);
         newPad.setProperty("ccNumber", 11, nullptr);
         newPad.setProperty("ccValue", 50, nullptr);
-        padsArray.appendChild(newPad, nullptr);
-        
+        pads.appendChild(newPad, nullptr);
     };
+
+    addFader.onClick = [&]()
+    {
+        juce::String UUID = juce::Uuid::Uuid().toString();
+        auto faders = store.getChildWithName("Faders");
+        juce::Identifier fader("Fader");
+        juce::ValueTree newFader(fader);
+        newFader.setProperty("id", UUID, nullptr);
+        newFader.setProperty("name", "Pause", nullptr);
+        newFader.setProperty("tabId", 1, nullptr);
+        newFader.setProperty("x", 20, nullptr);
+        newFader.setProperty("y", 90, nullptr);
+        newFader.setProperty("w", Config::FADERWIDTH, nullptr);
+        newFader.setProperty("h", Config::FADERHEIGHT, nullptr);
+        newFader.setProperty("ccNumber", 11, nullptr);
+        newFader.setProperty("ccValue", 50, nullptr);
+        faders.appendChild(newFader, nullptr);
+    };
+
     addAndMakeVisible(logoName);
     logoName.setText(juce::String("Composer Controller"), juce::NotificationType::dontSendNotification);
     shadow.setOwner(this);
@@ -75,19 +100,4 @@ void Header::resized()
     rightFb.items.add(juce::FlexItem(addPad).withHeight(20).withWidth(50).withMargin(10));
     rightFb.items.add(juce::FlexItem(editBtn).withHeight(20).withWidth(50).withMargin(10));
     mainFb.performLayout(getLocalBounds());
-}
-
-void Header::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
-    const juce::Identifier& property)
-{
-    auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
-    isEditingMode = value;
-    if (value)
-    {
-
-    }
-    else
-    {
-
-    }
 }

@@ -4,30 +4,33 @@
 #include "Utilities.h"
 
 //==============================================================================
-Fader::Fader(juce::ValueTree& v)
+Fader::Fader(juce::ValueTree& store)
 {
-    init(v, "Fader");
+    init(store, "Fader");
 }
 
-Fader::Fader(juce::ValueTree& v, juce::String name)
+Fader::Fader(juce::ValueTree& store, juce::String name)
 {
-    init(v, name);
+    init(store, name);
 }
 
 Fader::~Fader()
 {
 }
 
-void Fader::init(juce::ValueTree& v, juce::String name)
+void Fader::init(juce::ValueTree& store, juce::String name)
 {
-    v.addListener(this);
+    store.addListener(this);
     // add mouse lister to the resizable corner
     resizableCorner.addMouseListener(this, false);
     dragComponent.addMouseListener(this, false);
     // create constraints for resize and position
-    movableConstraints.setMinimumOnscreenAmounts(faderHeight, faderWidth, faderHeight, faderWidth);
-    resizableConstraints.setMinimumSize(faderWidth, faderHeight);
-    resizableConstraints.setMaximumSize(faderWidth * 2, getParentHeight() - 200);
+    if (h != 0 && y != 0)
+    {
+        movableConstraints.setMinimumOnscreenAmounts(h, w, h, w);
+        resizableConstraints.setMinimumSize(w, h);
+        resizableConstraints.setMaximumSize(w * 2, getParentHeight() - 200);
+    }
 
     // create resizable corner component to add to fader
     if (isEditingMode)
@@ -98,18 +101,25 @@ void Fader::mouseDrag(const juce::MouseEvent& event)
 void Fader::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
     const juce::Identifier& property)
 {
-    auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
-    isEditingMode = value;
-    if (value)
+    if (property.toString() == "isEditing")
     {
-        addAndMakeVisible(resizableCorner);
-        addAndMakeVisible(dragComponent);
-        slider.setEnabled(false);
+        auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
+        isEditingMode = value;
+        if (value)
+        {
+            addAndMakeVisible(resizableCorner);
+            addAndMakeVisible(dragComponent);
+            slider.setEnabled(false);
+        }
+        else
+        {
+           resizableCorner.setVisible(false);
+           dragComponent.setVisible(false);
+           slider.setEnabled(true);
+        }
     }
     else
     {
-       resizableCorner.setVisible(false);
-       dragComponent.setVisible(false);
-       slider.setEnabled(true);
+        return;
     }
 }

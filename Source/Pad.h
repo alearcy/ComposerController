@@ -4,12 +4,12 @@
 #include "Config.h"
 #include "ButtonCustomStyle.h"
 #include "CustomDragComponent.h"
+#include "ControllerObject.h"
 
 //==============================================================================
-/*
-*/
 class Pad  : public juce::Component,
-             public juce::ValueTree::Listener
+             public juce::ValueTree::Listener,
+             public ControllerObject
 {
 public:
     Pad(juce::ValueTree& v);
@@ -21,21 +21,6 @@ public:
 
     void mouseDrag(const juce::MouseEvent& event) override;
     void mouseDown(const juce::MouseEvent& event) override;
-
-    // properties
-    juce::Label padLabel;
-    juce::String id; // exadecimal ID
-    juce::String tabId; // tab where is created on
-    int midiChannel = 1; // midi channel
-    int ccNumber; // cc number like cc11
-    int ccValue; // cc value like 127
-    Config::MidiType midiType = Config::MidiType::NOTEON;
-    juce::Colour color = juce::Colours::coral; // default fader color
-    int w = Config::ComponentSizes::PADWIDTH;
-    int h = Config::ComponentSizes::PADHEIGHT;
-    int x;
-    int y;
-    bool isEditingMode = false;
 
 private:
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
