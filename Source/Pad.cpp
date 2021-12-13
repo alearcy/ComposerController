@@ -44,8 +44,6 @@ void Pad::init(juce::ValueTree& store, juce::String name)
     button.setLookAndFeel(&buttonCustomStyle);
     button.setButtonText(name);
     button.setColour(juce::TextButton::buttonColourId, color);
-
-
 }
 //==============================================================================
 
@@ -91,7 +89,7 @@ void Pad::mouseDrag(const juce::MouseEvent& event)
 void Pad::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
     const juce::Identifier& property)
 {
-    if (property.toString() == "isEditingMode")
+    if (property.toString() == "isEditing")
     {
         auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
         isEditingMode = value;
@@ -107,9 +105,5 @@ void Pad::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
             dragComponent.setVisible(false);
             button.setEnabled(true);
         }
-    }
-    else
-    {
-        return;
     }
 }

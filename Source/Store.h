@@ -66,7 +66,7 @@ namespace Store
 	inline void exportStoreToXML(juce::ValueTree& store)
 	{
 		std::unique_ptr<juce::XmlElement> xml(store.createXml());
-		xml->writeTo(juce::File(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + "CCStore.xml"), juce::XmlElement::TextFormat());
+		xml->writeTo(juce::File(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + juce::File::getSeparatorString() +  "CCStore.xml"), juce::XmlElement::TextFormat());
 	}
 
 }

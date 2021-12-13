@@ -118,8 +118,4 @@ void Fader::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChange
            slider.setEnabled(true);
         }
     }
-    else
-    {
-        return;
-    }
 }

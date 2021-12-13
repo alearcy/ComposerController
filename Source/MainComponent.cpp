@@ -66,9 +66,7 @@ void MainComponent::initializeStore()
     store = Store::store();
     store.addListener(this);
 
-    DBG(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + juce::File::getSeparatorString() + "CCStore.xml");
-
-    juce::File storeFile = juce::File(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + "CCStore.xml");
+    juce::File storeFile = juce::File(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + juce::File::getSeparatorString() + "CCStore.xml");
     auto xml(juce::XmlDocument::parse(storeFile));
 
     if (!storeFile.existsAsFile() || xml == nullptr) {
@@ -105,20 +103,6 @@ void MainComponent::initializeStore()
         }
     }
 }
-
-//void MainComponent::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
-//    const juce::Identifier& property)
-//{
-//    if (property.toString() == "isEditing")
-//    {
-//        auto value = (bool)(treeWhosePropertyHasChanged.getProperty(property));
-//       
-//    }
-//    else
-//    {
-//        return;
-//    }
-//}
 
 void MainComponent::valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded)
 {
