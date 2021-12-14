@@ -42,7 +42,7 @@ void MainComponent::resized()
     {
         for (auto &p : pads)
         {
-            p->setBounds(p->x, p->y, p->w, p->h);
+            p->setBounds(p->getBounds().getX(), p->getBounds().getY(), p->getBounds().getWidth(), p->getBounds().getHeight());
         }
     }
 
@@ -50,7 +50,7 @@ void MainComponent::resized()
     {
         for (auto& f : faders)
         {
-            f->setBounds(f->x, f->y, f->w, f->h);
+            f->setBounds(f->getBounds().getX(), f->getBounds().getY(), f->getBounds().getWidth(), f->getBounds().getHeight());
         }
     }
 

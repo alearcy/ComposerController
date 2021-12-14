@@ -21,8 +21,11 @@ public:
 
     void mouseDrag(const juce::MouseEvent& event) override;
     void mouseDown(const juce::MouseEvent& event) override;
+    void mouseUp(const juce::MouseEvent& event) override;
 
 private:
+    //TODO: viene copiato o passato?
+    juce::ValueTree localStore;
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
     juce::ComponentBoundsConstrainer movableConstraints;
     juce::ComponentBoundsConstrainer resizableConstraints;

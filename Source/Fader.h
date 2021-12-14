@@ -24,10 +24,12 @@ public:
     void resized() override;
     void mouseDrag(const juce::MouseEvent& event) override;
     void mouseDown(const juce::MouseEvent& event) override;
+    void mouseUp(const juce::MouseEvent& event) override;
 
     juce::Label faderLabel;
 
 private:
+    juce::ValueTree localStore;
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
     juce::ComponentBoundsConstrainer movableConstraints;
     juce::ComponentBoundsConstrainer resizableConstraints;

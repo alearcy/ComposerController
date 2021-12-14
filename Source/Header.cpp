@@ -36,7 +36,7 @@ Header::Header(juce::ValueTree& store)
         juce::Identifier pad("Pad");
         juce::ValueTree newPad(pad);
         newPad.setProperty("id", UUID, nullptr);
-        newPad.setProperty("name", "Pause", nullptr);
+        newPad.setProperty("name", "Pad", nullptr);
         newPad.setProperty("tabId", 1, nullptr);
         newPad.setProperty("x", 20, nullptr);
         newPad.setProperty("y", 90, nullptr);
@@ -54,7 +54,7 @@ Header::Header(juce::ValueTree& store)
         juce::Identifier fader("Fader");
         juce::ValueTree newFader(fader);
         newFader.setProperty("id", UUID, nullptr);
-        newFader.setProperty("name", "Pause", nullptr);
+        newFader.setProperty("name", "Fader", nullptr);
         newFader.setProperty("tabId", 1, nullptr);
         newFader.setProperty("x", 20, nullptr);
         newFader.setProperty("y", 90, nullptr);

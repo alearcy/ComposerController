@@ -20,7 +20,8 @@ Pad::~Pad()
 
 void Pad::init(juce::ValueTree& store, juce::String name)
 {
-    store.addListener(this);
+    localStore = store;
+    localStore.addListener(this);
     // add mouse lister to the resizable corner and drag components
     resizableCorner.addMouseListener(this, false);
     dragComponent.addMouseListener(this, false);
@@ -82,6 +83,28 @@ void Pad::mouseDrag(const juce::MouseEvent& event)
         if (event.eventComponent == &resizableCorner)
         {
             Utility::setRoundedSizes(*this, 20);
+        }
+    }
+}
+
+void Pad::mouseUp(const juce::MouseEvent& event)
+{
+    if (isEditingMode)
+    {
+        auto padsFromStore = localStore.getChildWithName("Pads");
+        if (padsFromStore.getNumChildren() > 0)
+        {
+            for (auto& pad : padsFromStore)
+            {
+                if (pad.getProperty("id") == id)
+                {
+                    pad.setProperty("x", getBounds().getX(), nullptr);
+                    pad.setProperty("y", getBounds().getY(), nullptr);
+                    pad.setProperty("w", getBounds().getWidth(), nullptr);
+                    pad.setProperty("h", getBounds().getHeight(), nullptr);
+
+                }
+            }
         }
     }
 }
