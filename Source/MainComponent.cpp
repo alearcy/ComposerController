@@ -40,6 +40,7 @@ void MainComponent::resized()
     header.setBounds(mainArea.removeFromTop(headerHeight));
     if (pads.size() > 0)
     {
+        //TODO:: valutare se è più efficiente leggere direttamente da x e non fare il getBounds
         for (auto &p : pads)
         {
             p->setBounds(p->getBounds().getX(), p->getBounds().getY(), p->getBounds().getWidth(), p->getBounds().getHeight());
