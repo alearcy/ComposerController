@@ -19,6 +19,7 @@ Header::Header(juce::ValueTree& store)
             store.setProperty("isEditing", true, nullptr);
             addAndMakeVisible(addPad);
             addAndMakeVisible(addFader);
+            addAndMakeVisible(openModal);
         }
         else {
             isEditingMode = false;
@@ -26,6 +27,7 @@ Header::Header(juce::ValueTree& store)
             store.setProperty("isEditing", false, nullptr);
             addPad.setVisible(false);
             addFader.setVisible(false);
+            openModal.setVisible(false);
             Store::exportStoreToXML(store);
         }
     };
@@ -64,6 +66,16 @@ Header::Header(juce::ValueTree& store)
         newFader.setProperty("ccValue", 50, nullptr);
         faders.appendChild(newFader, nullptr);
     };
+    openModal.onClick = [&]()
+    {
+        juce::DialogWindow::LaunchOptions modalSettings;
+
+        modalSettings.dialogTitle = "La mia modale";
+        modalSettings.escapeKeyTriggersCloseButton = true;
+        modalSettings.useNativeTitleBar = true;
+        modalSettings.content.set(&padModal, false);
+        modalSettings.launchAsync();
+    };
 
     addAndMakeVisible(logoName);
     logoName.setText(juce::String("Composer Controller"), juce::NotificationType::dontSendNotification);
@@ -96,6 +108,7 @@ void Header::resized()
 
     mainFb.items.add(juce::FlexItem(logoName).withHeight(20).withWidth(150).withMargin(20));
     mainFb.items.add(juce::FlexItem(rightFb).withFlex(1.0f));
+    rightFb.items.add(juce::FlexItem(openModal).withHeight(20).withWidth(50).withMargin(10));
     rightFb.items.add(juce::FlexItem(addFader).withHeight(20).withWidth(50).withMargin(10));
     rightFb.items.add(juce::FlexItem(addPad).withHeight(20).withWidth(50).withMargin(10));
     rightFb.items.add(juce::FlexItem(editBtn).withHeight(20).withWidth(50).withMargin(10));
