@@ -67,16 +67,6 @@ void MainComponent::initializeStore()
     store = Store::store();
     store.addListener(this);
 
-    juce::File storeFile = juce::File(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + juce::File::getSeparatorString() + "CCStore.xml");
-    auto xml(juce::XmlDocument::parse(storeFile));
-
-    if (!storeFile.existsAsFile() || xml == nullptr) {
-        DBG("Non esiste");
-        return;
-    }
-
-    // Replace default store ValueTree with the loaded one
-    store.copyPropertiesAndChildrenFrom(juce::ValueTree::fromXml(*xml), nullptr);
     auto padsFromStore = store.getChildWithName("Pads");
     auto fadersFromStore = store.getChildWithName("Faders");
     if (padsFromStore.getNumChildren() > 0)

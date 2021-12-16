@@ -42,19 +42,34 @@ namespace Store
 
 	inline juce::ValueTree store()
 	{
+		// create store
 		static juce::Identifier CCState("CCState");
-		static juce::Identifier Tabs("Tabs");
-		static juce::Identifier Faders("Faders");
-		static juce::Identifier Pads("Pads");
 		juce::ValueTree store(CCState);
-		static juce::Identifier isEditing("isEditing");
-		store.setProperty(isEditing, false, nullptr);
-		juce::ValueTree tabs(Tabs);
-		juce::ValueTree faders(Faders);
-		juce::ValueTree pads(Pads);
-		store.appendChild(tabs, nullptr);
-		store.appendChild(faders, nullptr);
-		store.appendChild(pads, nullptr);
+		
+		// retrieve saved store
+		juce::File storeFile = juce::File(juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + juce::File::getSeparatorString() + "CCStore.xml");
+		auto xml(juce::XmlDocument::parse(storeFile));
+
+		if (!storeFile.existsAsFile() || xml == nullptr) {
+			// append children
+			static juce::Identifier Tabs("Tabs");
+			static juce::Identifier Faders("Faders");
+			static juce::Identifier Pads("Pads");
+			static juce::Identifier isEditing("isEditing");
+			store.setProperty(isEditing, false, nullptr);
+			juce::ValueTree tabs(Tabs);
+			juce::ValueTree faders(Faders);
+			juce::ValueTree pads(Pads);
+			store.appendChild(tabs, nullptr);
+			store.appendChild(faders, nullptr);
+			store.appendChild(pads, nullptr);
+		}
+		else
+		{
+			// Replace default store ValueTree with the loaded one
+			store.copyPropertiesAndChildrenFrom(juce::ValueTree::fromXml(*xml), nullptr);
+
+		}		
 		return store;
 	}
 
