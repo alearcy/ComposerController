@@ -20,8 +20,8 @@ Fader::~Fader()
 
 void Fader::init(juce::ValueTree& store, juce::String name)
 {
-    localStore = store;
-    localStore.addListener(this);
+    i_store = store;
+    i_store.addListener(this);
     // add mouse lister to the resizable corner
     resizableCorner.addMouseListener(this, false);
     dragComponent.addMouseListener(this, false);
@@ -103,7 +103,7 @@ void Fader::mouseUp(const juce::MouseEvent& event)
 {
     if (isEditingMode)
     {
-        auto fadersFromStore = localStore.getChildWithName("Faders");
+        auto fadersFromStore = i_store.getChildWithName("Faders");
         if (fadersFromStore.getNumChildren() > 0)
         {
             for (auto& fader : fadersFromStore)

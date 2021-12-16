@@ -20,8 +20,8 @@ Pad::~Pad()
 
 void Pad::init(juce::ValueTree& store, juce::String name)
 {
-    localStore = store;
-    localStore.addListener(this);
+    i_store = store;
+    i_store.addListener(this);
     // add mouse lister to the resizable corner and drag components
     resizableCorner.addMouseListener(this, false);
     dragComponent.addMouseListener(this, false);
@@ -91,7 +91,7 @@ void Pad::mouseUp(const juce::MouseEvent& event)
 {
     if (isEditingMode)
     {
-        auto padsFromStore = localStore.getChildWithName("Pads");
+        auto padsFromStore = i_store.getChildWithName("Pads");
         if (padsFromStore.getNumChildren() > 0)
         {
             for (auto& pad : padsFromStore)

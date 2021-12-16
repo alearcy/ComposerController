@@ -29,7 +29,7 @@ public:
     juce::Label faderLabel;
 
 private:
-    juce::ValueTree localStore;
+    juce::ValueTree i_store;
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
     juce::ComponentBoundsConstrainer movableConstraints;
     juce::ComponentBoundsConstrainer resizableConstraints;
