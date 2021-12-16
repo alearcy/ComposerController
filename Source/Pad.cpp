@@ -33,14 +33,6 @@ void Pad::init(juce::ValueTree& store, juce::String name)
         resizableConstraints.setMaximumSize(w * 2, h * 2);
     }
 
-    // create resizable corner component to add to pad
-    if (isEditingMode)
-    {
-        addAndMakeVisible(resizableCorner);
-        addAndMakeVisible(dragComponent);
-        button.setEnabled(false);
-    }
-
     addAndMakeVisible(button);
     button.setLookAndFeel(&buttonCustomStyle);
     button.setButtonText(name);
@@ -55,6 +47,12 @@ void Pad::paint(juce::Graphics& g)
 
 void Pad::resized()
 {
+    if (isEditingMode)
+    {
+        addAndMakeVisible(resizableCorner);
+        addAndMakeVisible(dragComponent);
+        button.setEnabled(false);
+    }
     button.setBounds(getLocalBounds());
     resizableCorner.setBounds(button.getWidth() - 15, button.getHeight() - 15, 15, 15);
     dragComponent.setBounds(5, button.getHeight() - 20, 15, 15);

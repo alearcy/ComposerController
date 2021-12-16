@@ -33,14 +33,6 @@ void Fader::init(juce::ValueTree& store, juce::String name)
         resizableConstraints.setMaximumSize(w * 2, getParentHeight() - 200);
     }
 
-    // create resizable corner component to add to fader
-    if (isEditingMode)
-    {
-        addAndMakeVisible(resizableCorner);
-        addAndMakeVisible(dragComponent);
-        slider.setEnabled(false);
-    }
-
     // create slider component
     addAndMakeVisible(slider);
     slider.setSliderStyle(juce::Slider::SliderStyle::LinearBarVertical);
@@ -66,6 +58,13 @@ void Fader::paint (juce::Graphics& g)
 
 void Fader::resized()
 {
+    // create resizable corner component to add to fader
+    if (isEditingMode)
+    {
+        addAndMakeVisible(resizableCorner);
+        addAndMakeVisible(dragComponent);
+        slider.setEnabled(false);
+    }
     slider.setBounds(0, 0, getWidth(), getHeight() - 25);
     faderLabel.setBounds(10, getHeight() - 20, getWidth() - 20, 30);
     resizableCorner.setBounds(getWidth() - 20, getHeight() - 20, 15, 15);
