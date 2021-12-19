@@ -7,6 +7,8 @@
               cppLanguageStandard="17">
   <MAINGROUP id="SJuTrP" name="ComposerController">
     <GROUP id="{05F82070-6192-7F42-DA51-1947DCA5E6A3}" name="Source">
+      <FILE id="gst5LZ" name="PadModal.cpp" compile="1" resource="0" file="Source/PadModal.cpp"/>
+      <FILE id="YSWfKp" name="PadModal.h" compile="0" resource="0" file="Source/PadModal.h"/>
       <FILE id="W3cBmK" name="Store.h" compile="0" resource="0" file="Source/Store.h"/>
       <FILE id="NAsR7x" name="ControllerObject.h" compile="0" resource="0"
             file="Source/ControllerObject.h"/>
@@ -28,9 +30,9 @@
       <FILE id="ijje6j" name="Tab.h" compile="0" resource="0" file="Source/Tab.h"/>
       <FILE id="RajE1F" name="Config.h" compile="0" resource="0" file="Source/Config.h"/>
       <FILE id="mQV52V" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
-      <FILE id="wZgPYn" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="LMuFPm" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
+      <FILE id="wZgPYn" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
@@ -46,6 +48,7 @@
         <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
   </EXPORTFORMATS>
@@ -55,5 +58,6 @@
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
 </JUCERPROJECT>

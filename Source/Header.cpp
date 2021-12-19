@@ -74,6 +74,7 @@ Header::Header(juce::ValueTree& store)
         modalSettings.escapeKeyTriggersCloseButton = true;
         modalSettings.useNativeTitleBar = true;
         modalSettings.content.set(&padModal, false);
+        modalSettings.resizable = false;
         modalSettings.launchAsync();
     };
 

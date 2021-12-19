@@ -24,7 +24,6 @@ public:
     void mouseUp(const juce::MouseEvent& event) override;
 
 private:
-    //TODO: viene copiato o passato?
     juce::ValueTree i_store;
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
     juce::ComponentBoundsConstrainer movableConstraints;
