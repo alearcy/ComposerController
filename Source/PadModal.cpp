@@ -3,8 +3,12 @@
 #include "Utilities.h"
 
 //==============================================================================
-PadModal::PadModal()
+PadModal::PadModal(juce::String id, juce::String padToEdit, juce::String ccValueToEdit, juce::String ccNumberToEdit, juce::String colorToEdit)
 {
+    nameEditor.setText(padToEdit);
+    ccValueEditor.setText(ccValueToEdit);
+    ccNumberEditor.setText(ccNumberToEdit);
+    
     addAndMakeVisible(name);
     addAndMakeVisible(nameEditor);
     addAndMakeVisible(ccValue);
@@ -13,12 +17,11 @@ PadModal::PadModal()
     addAndMakeVisible(ccNumber);
     addAndMakeVisible(ccNumberEditor);
     addAndMakeVisible(saveButton);
-    addAndMakeVisible(colorChange);
+    addAndMakeVisible(colorSelector);
 
-    colorChange.onClick = [&]()
+    colorSelector.onClick = [&]()
     {
-        auto colourSelector = std::make_unique<juce::ColourSelector>(juce::ColourSelector::showAlphaChannel
-            | juce::ColourSelector::showColourAtTop
+        auto colourSelector = std::make_unique<juce::ColourSelector>(juce::ColourSelector::showColourAtTop
             | juce::ColourSelector::editableColour
             | juce::ColourSelector::showSliders
             | juce::ColourSelector::showColourspace);
@@ -35,7 +38,12 @@ PadModal::PadModal()
 
     saveButton.setLookAndFeel(&buttonCustomStyle);
     saveButton.setButtonText("Save");
-    colorChange.setLookAndFeel(&buttonCustomStyle);
+    saveButton.onClick = [&]()
+    {
+        // TODO: find pad by ID and update store.
+    };
+
+    colorSelector.setLookAndFeel(&buttonCustomStyle);
 
     name.setText("Pad name:", juce::NotificationType::dontSendNotification);
     name.setJustificationType(juce::Justification::centredLeft);
@@ -64,7 +72,7 @@ PadModal::PadModal()
     ccNumberEditor.setColour(juce::TextEditor::ColourIds::backgroundColourId, juce::Colour(0xff5a5a5a));
     ccNumberEditor.setColour(juce::TextEditor::ColourIds::outlineColourId, juce::Colour(0x00));
 
-    color.attachToComponent(&colorChange, false);
+    color.attachToComponent(&colorSelector, false);
     color.setText("Colore del pad:", juce::NotificationType::dontSendNotification);
 
     setSize(300, 400);
@@ -91,12 +99,15 @@ void PadModal::resized()
     nameEditor.setBounds(20, 40, getWidth() - 40, 30);
     ccNumberEditor.setBounds(20, nameEditor.getY() + spaceBetween, getWidth() - 40, 30);
     ccValueEditor.setBounds(20, ccNumberEditor.getY() + spaceBetween, getWidth() - 40, 30);
-    colorChange.setBounds(20, ccValueEditor.getY() + spaceBetween, getWidth() - 40, 30);
-    saveButton.setBounds(20, colorChange.getY() + spaceBetween, getWidth() - 40, 30);
+    colorSelector.setBounds(20, ccValueEditor.getY() + spaceBetween, getWidth() - 40, 30);
+    saveButton.setBounds(20, colorSelector.getY() + spaceBetween, getWidth() - 40, 30);
 }
 
 void PadModal::changeListenerCallback(juce::ChangeBroadcaster* source)
 {
     if (auto* cs = dynamic_cast<juce::ColourSelector*> (source))
-        colorChange.setColour(juce::TextButton::buttonColourId, cs->getCurrentColour());
+    {
+        colorSelector.setColour(juce::TextButton::buttonColourId, cs->getCurrentColour());
+        // TODO: intercept color and change it into store for the selected pad
+    }
 }

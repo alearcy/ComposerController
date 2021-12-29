@@ -5,6 +5,7 @@
 #include "ButtonCustomStyle.h"
 #include "CustomDragComponent.h"
 #include "ControllerObject.h"
+#include "PadModal.h"
 
 //==============================================================================
 class Pad  : public juce::Component,
@@ -31,8 +32,11 @@ private:
     juce::ResizableCornerComponent resizableCorner = juce::ResizableCornerComponent(this, &resizableConstraints);
     juce::TextButton button;
     juce::TextButton moveButton;
+    juce::TextButton openModal{ "Edit" };
     void init(juce::ValueTree& v, juce::String name);
     ButtonCustomStyle buttonCustomStyle;
     CustomDragComponent dragComponent;
+    juce::String padName;
+    PadModal padModal{ id.toStdString(), padName, (juce::String)ccValue, (juce::String)ccNumber, color.toString() };
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pad)
 };

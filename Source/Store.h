@@ -51,18 +51,21 @@ namespace Store
 		auto xml(juce::XmlDocument::parse(storeFile));
 
 		if (!storeFile.existsAsFile() || xml == nullptr) {
+			static juce::Identifier isEditing("isEditing");
+			store.setProperty(isEditing, false, nullptr);
 			// append children
 			static juce::Identifier Tabs("Tabs");
 			static juce::Identifier Faders("Faders");
 			static juce::Identifier Pads("Pads");
-			static juce::Identifier isEditing("isEditing");
-			store.setProperty(isEditing, false, nullptr);
+			juce::Identifier selectedPad("selectedPad");
+			juce::ValueTree padToEdit(selectedPad);
 			juce::ValueTree tabs(Tabs);
 			juce::ValueTree faders(Faders);
 			juce::ValueTree pads(Pads);
 			store.appendChild(tabs, nullptr);
 			store.appendChild(faders, nullptr);
 			store.appendChild(pads, nullptr);
+			store.appendChild(padToEdit, nullptr);
 		}
 		else
 		{

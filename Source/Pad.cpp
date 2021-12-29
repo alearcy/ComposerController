@@ -2,6 +2,7 @@
 #include "Pad.h"
 #include "Utilities.h"
 
+
 //==============================================================================
 Pad::Pad(juce::ValueTree& store)
 {
@@ -20,6 +21,7 @@ Pad::~Pad()
 
 void Pad::init(juce::ValueTree& store, juce::String name)
 {
+    padName = name;
     i_store = store;
     i_store.addListener(this);
     // add mouse lister to the resizable corner and drag components
@@ -37,6 +39,17 @@ void Pad::init(juce::ValueTree& store, juce::String name)
     button.setLookAndFeel(&buttonCustomStyle);
     button.setButtonText(name);
     button.setColour(juce::TextButton::buttonColourId, color);
+
+    openModal.onClick = [this]()
+    {   
+        juce::DialogWindow::LaunchOptions modalSettings;
+        modalSettings.dialogTitle = "Edit pad";
+        modalSettings.escapeKeyTriggersCloseButton = true;
+        modalSettings.useNativeTitleBar = true;
+        modalSettings.content.set(&padModal, false);
+        modalSettings.resizable = false;
+        modalSettings.launchAsync();
+    };
 }
 //==============================================================================
 
@@ -51,11 +64,13 @@ void Pad::resized()
     {
         addAndMakeVisible(resizableCorner);
         addAndMakeVisible(dragComponent);
+        addAndMakeVisible(openModal);
         button.setEnabled(false);
     }
     button.setBounds(getLocalBounds());
     resizableCorner.setBounds(button.getWidth() - 15, button.getHeight() - 15, 15, 15);
     dragComponent.setBounds(5, button.getHeight() - 20, 15, 15);
+    openModal.setBounds(5, 5, 40, 10);
 }
 
 void Pad::mouseDown(const juce::MouseEvent& event)
@@ -118,12 +133,14 @@ void Pad::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
         {
             addAndMakeVisible(resizableCorner);
             addAndMakeVisible(dragComponent);
+            addAndMakeVisible(openModal);
             button.setEnabled(false);
         }
         else
         {
             resizableCorner.setVisible(false);
             dragComponent.setVisible(false);
+            openModal.setVisible(false);
             button.setEnabled(true);
         }
     }
